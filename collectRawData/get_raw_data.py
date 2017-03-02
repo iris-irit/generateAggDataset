@@ -124,12 +124,14 @@ for eventId in [3] :
 	dir_img = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/images/"
 	dir_videos = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/videos/"
 	dir_index = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/to_index/"
+	dir_mapping = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/mapping/"
 	os.system("rm -r "+dir_data)
 	os.system("mkdir "+dir_data)
 	os.system("mkdir " + dir_data+"/urls")
 	os.system("mkdir " + dir_data+"/images")
 	os.system("mkdir " + dir_data+"/videos")
 	os.system("mkdir " + dir_data+"/to_index")
+	os.system("mkdir " + dir_data+"/mapping")
 
 
 	print("*********",eventId,"*********")
@@ -178,8 +180,8 @@ for eventId in [3] :
 			if "urls" in tw["entities"] :
 				for u in tw["entities"]["urls"] :
 					url = u["expanded_url"]
-					print("************************************")
-					print(url)
+					#print("************************************")
+					print("\t",url)
 					try :
 						req = requests.get(url,verify=False, timeout=5)
 
@@ -260,7 +262,7 @@ for eventId in [3] :
 
 
 									else :
-										print(req.content)
+										#print(req.content)
 										desc = extractDescription(soup)
 										# Ajout dans la structure de mapping de la news
 										if id_media not in inverse_mapping:
@@ -309,6 +311,14 @@ for eventId in [3] :
 		elif "website" in obj["type"]:
 			with open(dir_index+"websites.xml","a") as f :
 				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
+
+	json_file = dir_mapping+"mapping.json"
+	with open(json_file, 'w') as outfile:
+		json.dump(mapping, outfile)
+
+	json_file = dir_mapping+"inverse.json"
+	with open(json_file, 'w') as outfile:
+		json.dump(inverse_mapping, outfile)
 
 
 	sys.exit()
