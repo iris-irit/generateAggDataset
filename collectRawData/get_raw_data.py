@@ -50,6 +50,8 @@ if DEBUG :
 	print(desc_lien)
 	print(image_lien)
 
+	print(extractDescription(s))
+
 	sys.exit()
 
 
