@@ -32,3 +32,5 @@ Pour les images, plusieurs cas possibles :
 2) Soit c'est une image distante =>
         a) c'est une page html (flicker) => voir la balise meta og:type (image)
         b) c'est une image (extension .jpg, .png, ...) => il faut tester l'extension de l'url
+
+

@@ -4,7 +4,13 @@ import sys,os
 import requests
 import socket
 import urllib.request
+from bs4 import BeautifulSoup
 
+def isImg(f) :
+    for ext in extensions_img :
+        if f.endswith(ext) :
+            return True
+    return False
 
 
 SEUIL = 100
@@ -15,17 +21,21 @@ gb = pd.DataFrame(df.groupby("IdEvent").sum().reset_index())
 
 listEventOk = []
 
+extensions_img = ["jpeg","jpg","exif","tiff","gif","bmp","png"]
+
+
 for index, row in gb.iterrows() :
     if row["Tweets"] >= SEUIL :
         listEventOk.append(row["IdEvent"])
 
+"""
 try :
     urllib.request.urlretrieve('http://www.toto.fr/test.png', 'test.png')
 except urllib.error.HTTPError :
     print("404")
 sys.exit()
 
-"""
+
 url404 = "https://twitter.com/WheresKernan/status/256925517494763520"
 req = requests.get(url404,verify=False, timeout=5)
 print(req.status_code)
@@ -70,7 +80,7 @@ for eventId in [3] :
             if "media" in tw["entities"] :
                 for m in tw["entities"]["media"] :
                     try:
-                        urllib.request.urlretrieve(m["media_url"], dir_img+id_tweet+"_"+m["media_url"].split("/")[-1])
+                        urllib.request.urlretrieve(m["media_url"], dir_img+id_tweet+"_upload_"+m["media_url"].split("/")[-1])
                     except urllib.error.HTTPError:
                         print("404")
 
@@ -90,8 +100,27 @@ for eventId in [3] :
                         print(req.status_code)
                         print(req.url)
 
-                        mappingUrl.setdefault(req.url, [])
-                        mappingUrl[req.url].append(id_tweet)
+                        # Gestion image :
+                        if isImg(req.url) :
+                            try:
+                                urllib.request.urlretrieve(req.url, dir_img + id_tweet + "_remote_" + req.url.split("/")[-1])
+                            except urllib.error.HTTPError:
+                                print("404")
+                        else :
+
+                            content = req.content
+                            soup = BeautifulSoup(content, 'html.parser')
+                            meta = soup.find_all("meta")
+                            print(meta)
+                            sys.exit()
+
+
+                            mappingUrl.setdefault(req.url, [])
+                            mappingUrl[req.url].append(id_tweet)
+
+
+
+
                         #print(req.content)
                     except requests.exceptions.Timeout :
                         print("socket.timeout")
