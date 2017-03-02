@@ -47,7 +47,7 @@ def getType(soup) :
 
 
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG :
 	url = "http://m.mlb.com/video/?content_id=19899319&topic_id=&c_id=mlb&tcid=vpp_copy_19899319&v=3&partnerId=aw-8279914866082570605-1043"
