@@ -169,7 +169,6 @@ for eventId in [3] :
 					except urllib.error.HTTPError:
 						print("404")
 
-					sys.exit()
 
 			# On s'occupe des entités (urls + images)
 			if "urls" in tw["entities"] :
