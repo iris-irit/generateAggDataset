@@ -321,4 +321,4 @@ for eventId in listEventOk :
 		json.dump(inverse_mapping, outfile)
 
 
-	sys.exit()
+	#sys.exit()
