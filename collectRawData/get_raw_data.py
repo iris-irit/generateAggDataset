@@ -264,11 +264,11 @@ for eventId in [3] :
 								desc_lien = soup.find("meta",  property="og:description")
 								image_lien = soup.find("meta", property="og:image")
 
-								print("AFFICHAGE DES META")
-								print(type_lien)
-								print(desc_lien)
-								print(image_lien)
-								sys.exit()
+								#print("AFFICHAGE DES META")
+								#print(type_lien)
+								#print(desc_lien)
+								#print(image_lien)
+								#sys.exit()
 
 
 
