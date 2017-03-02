@@ -252,6 +252,7 @@ for eventId in [3] :
 
 
 								else :
+									print(req.content)
 									desc = extractDescription(soup)
 									# Ajout dans la structure de mapping de la news
 									if id_media not in inverse_mapping:
