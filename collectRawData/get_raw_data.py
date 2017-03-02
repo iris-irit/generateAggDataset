@@ -207,65 +207,68 @@ for eventId in [3] :
 
 								content = req.content
 								soup = BeautifulSoup(content, 'html.parser')
-								type_lien = getType(soup)
 
-								if type_lien == "video" :
-									# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
-									desc = extractDescription(soup)
-									print(desc)
-									# TODO Définir comment seront stockés les documents de type video
+								if soup.find("title"):
 
-									# Ajout dans la structure de mapping de l'image url
-									if id_media not in inverse_mapping:
-										id = len(inverse_mapping)
-										inverse_mapping[id_media] = id
-										mapping[id] = {"origin": origin, "type": "video", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+									type_lien = getType(soup)
+
+									if type_lien == "video" :
+										# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
+										desc = extractDescription(soup)
+										print(desc)
+										# TODO Définir comment seront stockés les documents de type video
+
+										# Ajout dans la structure de mapping de l'image url
+										if id_media not in inverse_mapping:
+											id = len(inverse_mapping)
+											inverse_mapping[id_media] = id
+											mapping[id] = {"origin": origin, "type": "video", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+										else :
+											mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+											mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+									elif type_lien == "image" :
+										origin = soup.find("meta", property="og:image")["content"]
+										id_media = origin.split("/")[-1]
+										desc = extractDescription(soup)
+
+										# Ajout dans la structure de mapping de l'image "html"
+										if id_media not in inverse_mapping:
+											id = len(inverse_mapping)
+											inverse_mapping[id_media] = id
+											mapping[id] = {"origin": origin, "type": "img_html", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+										else :
+											mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+											mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+
+									elif type_lien == "news" :
+										desc = extractDescription(soup)
+										# Ajout dans la structure de mapping de la news
+										if id_media not in inverse_mapping:
+											id = len(inverse_mapping)
+											inverse_mapping[id_media] = id
+											mapping[id] = {"origin": origin, "type": "news", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+										else :
+											mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+											mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+
 									else :
-										mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-										mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
-
-								elif type_lien == "image" :
-									origin = soup.find("meta", property="og:image")["content"]
-									id_media = origin.split("/")[-1]
-									desc = extractDescription(soup)
-
-									# Ajout dans la structure de mapping de l'image "html"
-									if id_media not in inverse_mapping:
-										id = len(inverse_mapping)
-										inverse_mapping[id_media] = id
-										mapping[id] = {"origin": origin, "type": "img_html", "tweets": [id_tweet], "description": text_tweet+" "+desc}
-									else :
-										mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-										mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+										print(req.content)
+										desc = extractDescription(soup)
+										# Ajout dans la structure de mapping de la news
+										if id_media not in inverse_mapping:
+											id = len(inverse_mapping)
+											inverse_mapping[id_media] = id
+											mapping[id] = {"origin": origin, "type": "website", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+										else :
+											mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+											mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
 
 
-								elif type_lien == "news" :
-									desc = extractDescription(soup)
-									# Ajout dans la structure de mapping de la news
-									if id_media not in inverse_mapping:
-										id = len(inverse_mapping)
-										inverse_mapping[id_media] = id
-										mapping[id] = {"origin": origin, "type": "news", "tweets": [id_tweet], "description": text_tweet+" "+desc}
-									else :
-										mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-										mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
-
-
-								else :
-									print(req.content)
-									desc = extractDescription(soup)
-									# Ajout dans la structure de mapping de la news
-									if id_media not in inverse_mapping:
-										id = len(inverse_mapping)
-										inverse_mapping[id_media] = id
-										mapping[id] = {"origin": origin, "type": "website", "tweets": [id_tweet], "description": text_tweet+" "+desc}
-									else :
-										mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-										mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
-
-
-								desc_lien = soup.find("meta",  property="og:description")
-								image_lien = soup.find("meta", property="og:image")
+									desc_lien = soup.find("meta",  property="og:description")
+									image_lien = soup.find("meta", property="og:image")
 
 								#print("AFFICHAGE DES META")
 								#print(type_lien)
