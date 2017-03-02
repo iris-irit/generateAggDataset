@@ -112,8 +112,8 @@ sys.exit()
 
 
 
-#for eventId in listEventOk :
-for eventId in [3] :
+for eventId in listEventOk :
+#for eventId in [3] :
 	mapping = {}
 	id = 0
 	inverse_mapping = {}
