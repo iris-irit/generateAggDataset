@@ -13,12 +13,11 @@ def isImg(f) :
 	return False
 
 
-def extractDescription(url):
+def extractDescription(soup):
 
 	print("&&&&&&&&&&&&&&&&&&&")
 	print(url)
 
-	soup = BeautifulSoup(url,'html.parser')
 	og = soup.find("meta",  property="og:description")
 	if og :
 		return og["content"]
@@ -40,7 +39,9 @@ DEBUG = True
 
 if DEBUG :
 	url = "http://m.mlb.com/video/?content_id=19899319&topic_id=&c_id=mlb&tcid=vpp_copy_19899319&v=3&partnerId=aw-8279914866082570605-1043"
-	s = BeautifulSoup(url, 'html.parser')
+	req = requests.get(url, verify=False, timeout=5)
+
+	s = BeautifulSoup(req.content, 'html.parser')
 	balise_type_lien = s.find("meta", property="og:type")
 	desc_lien = s.find("meta", property="og:description")
 	image_lien = s.find("meta", property="og:image")
@@ -157,7 +158,7 @@ for eventId in [3] :
 
 							if "video" in type_lien :
 								# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
-								desc = extractDescription(req.url)
+								desc = extractDescription(soup)
 								print(desc)
 								sys.exit()
 
