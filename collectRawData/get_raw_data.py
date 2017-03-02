@@ -28,7 +28,7 @@ def extractDescription(soup):
 			if og_title :
 				return og_title["content"]
 			else :
-				return soup.find("title").contents[0]
+				return soup.find("title").text
 
 
 def getType(soup) :
