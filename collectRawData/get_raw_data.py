@@ -296,19 +296,19 @@ for eventId in [3] :
 		obj = mapping[id]
 		if "tweet" in obj["type"]:
 			with open(dir_index+"tweets.xml","a") as f :
-				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
 		elif "img" in obj["type"]:
 			with open(dir_index+"images.xml","a") as f :
-				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
 		elif "video" in obj["type"]:
 			with open(dir_index+"videos.xml","a") as f :
-				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
 		elif "news" in obj["type"]:
 			with open(dir_index+"news.xml","a") as f :
-				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
 		elif "website" in obj["type"]:
 			with open(dir_index+"websites.xml","a") as f :
-				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"\n</DOC>\n")
 
 
 	sys.exit()
