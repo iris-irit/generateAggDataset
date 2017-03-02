@@ -123,10 +123,14 @@ for eventId in [3] :
 	dir_urls = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/urls/"
 	dir_img = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/images/"
 	dir_videos = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/videos/"
+	dir_index = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" + str(eventId)+"/to_index/"
 	os.system("rm -r "+dir_data)
 	os.system("mkdir "+dir_data)
 	os.system("mkdir " + dir_data+"/urls")
 	os.system("mkdir " + dir_data+"/images")
+	os.system("mkdir " + dir_data+"/videos")
+	os.system("mkdir " + dir_data+"/to_index")
+
 
 	print("*********",eventId,"*********")
 	# Lecture des fichiers json
@@ -230,6 +234,7 @@ for eventId in [3] :
 									elif type_lien == "image" :
 										origin = soup.find("meta", property="og:image")["content"]
 										id_media = origin.split("/")[-1]
+										urllib.request.urlretrieve(origin,dir_img + "html_" + id_media)
 										desc = extractDescription(soup)
 
 										# Ajout dans la structure de mapping de l'image "html"
@@ -287,5 +292,23 @@ for eventId in [3] :
 					except requests.exceptions.ConnectionError :
 						print("socket.gaierror")
 
-	print(mapping)
+	for id in mapping :
+		obj = mapping[id]
+		if "tweet" in obj["type"]:
+			with open(dir_index+"tweets.xml","a") as f :
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+		elif "img" in obj["type"]:
+			with open(dir_index+"images.xml","a") as f :
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+		elif "video" in obj["type"]:
+			with open(dir_index+"videos.xml","a") as f :
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+		elif "news" in obj["type"]:
+			with open(dir_index+"news.xml","a") as f :
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+		elif "website" in obj["type"]:
+			with open(dir_index+"websites.xml","a") as f :
+				f.write("<DOC>\n<DOCNO>"+str(id)+"</DOCNO>\n"+obj["description"]+"</DOC>\n")
+
+
 	sys.exit()
