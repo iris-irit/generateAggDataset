@@ -22,7 +22,7 @@ def extractDescription(soup):
 	if og :
 		return og["content"]
 	else :
-		name = soup.find("meta", {"description":True})
+		name = soup.find("meta", {"name":"description"})
 		if name :
 			return name["content"]
 		else :
