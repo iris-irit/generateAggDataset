@@ -13,10 +13,38 @@ def isImg(f) :
     return False
 
 
+def extractDescription(url):
+
+    print("&&&&&&&&&&&&&&&&&&&")
+    print(url)
+
+    soup = BeautifulSoup(url,'html.parser')
+    og = soup.find("meta",  property="og:description")
+    if og :
+        return og["content"]
+    else : 
+        name = soup.find("meta", {"description":True})
+        if name :
+            return name["content"]
+        else :
+            og_title = soup.find("meta",  property="og:title")
+            print("og:title",og_title)
+            if og_title :
+                return og_title["content"]
+            else :
+                return soup.find("title").contents[0]
+
+
+
+
+
+
+
 SEUIL = 100
 csv_file = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Preliminaries/event_statistics.csv"
 
-df = pd.read_csv(csv_file)
+df = pd.read_csv(csv_file, sep="\t")
+print(df)
 gb = pd.DataFrame(df.groupby("IdEvent").sum().reset_index())
 
 listEventOk = []
@@ -110,8 +138,24 @@ for eventId in [3] :
 
                             content = req.content
                             soup = BeautifulSoup(content, 'html.parser')
-                            meta = soup.find_all("meta")
-                            print(meta)
+                            balise_type_lien = soup.find("meta",  property="og:type")
+                            type_lien = balise_type_lien["content"].lower()
+
+                            if "video" in type_lien :
+                                # Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
+                                desc = extractDescription(req.url)
+                                print(desc)
+                                sys.exit()
+
+
+
+                            desc_lien = soup.find("meta",  property="og:description")
+                            image_lien = soup.find("meta", property="og:image")
+
+                            print("AFFICHAGE DES META")
+                            print(type_lien)
+                            print(desc_lien)
+                            print(image_lien)
                             sys.exit()
 
 
