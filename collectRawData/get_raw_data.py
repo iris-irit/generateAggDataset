@@ -236,7 +236,6 @@ for eventId in listEventOk :
 											# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
 											desc = extractDescription(soup)
 											print(desc)
-											# TODO Définir comment seront stockés les documents de type video
 
 											# Ajout dans la structure de mapping de l'image url
 											if id_media not in inverse_mapping:
@@ -309,6 +308,8 @@ for eventId in listEventOk :
 							print("\t\tsocket.gaierror")
 						except requests.exceptions.ContentDecodingError :
 							print("\t\tcontent.decoding.error")
+						except requests.exceptions.TooManyRedirects :
+							print("\t\trequests.exceptions.TooManyRedirects")
 
 		for id in mapping :
 			obj = mapping[id]
