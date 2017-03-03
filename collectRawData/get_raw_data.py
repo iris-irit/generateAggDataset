@@ -16,20 +16,20 @@ def isImg(f) :
 
 def extractDescription(soup):
 
-	print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+	#print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
 	og = soup.find("meta",  property="og:description")
-	if og :
-		print(og)
+	if og and og.has_attr("content") :
+		#print(og)
 		return og["content"]
 	else :
 		name = soup.find("meta", {"name":"description"})
-		if name :
+		if name and name.has_attr("content"):
 			return name["content"]
 		else :
 			og_title = soup.find("meta",  property="og:title")
-			print("og:title",og_title)
-			if og_title and "content" in og_title:
+			#print("og:title",og_title)
+			if og_title and og_title.has_attr("content"):
 				return og_title["content"]
 			else :
 				return soup.find("title").text
