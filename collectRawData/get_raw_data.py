@@ -125,6 +125,8 @@ for eventId in listEventOk :
 
 	if not alreadyExtracted(eventId) :
 
+		set_tw = set()
+
 #for eventId in [3] :
 		mapping = {}
 		id = 0
@@ -155,161 +157,176 @@ for eventId in listEventOk :
 
 		# Parcours des tweets pour chaque évènement
 		for tw in js :
-			if "entities" in tw :
 
-				id_tweet = str(tw["id"])
+			if tw["id"] not in set_tw :
 
-				text_tweet = tw["text"]
-				text_tweet = re.sub(r"http\S+",'',text_tweet)
-
-				# Si le texte n'est pas vide, on crée un enregistrement associé au tweet
-				if id_tweet not in inverse_mapping :
-					id = len(inverse_mapping)
-					inverse_mapping[id_tweet] = id
-					mapping[id] = {"origin":str(id_tweet), "type":"tweet", "tweets":[id_tweet],"description":text_tweet}
+				set_tw.add(tw["id"])
 
 
-				# On s'occupe du champ media (les images uploadees)
-				if "media" in tw["entities"] :
-					for m in tw["entities"]["media"] :
-						try:
-							id_media = id_tweet+"_upload_"+m["media_url"].split("/")[-1]
-							origin = m["media_url"]
-							urllib.request.urlretrieve(origin, dir_img+id_media)
+				if "entities" in tw :
 
-							# Ajout dans la structure de mapping de l'image uploadee
-							if id_media not in inverse_mapping:
-								id = len(inverse_mapping)
-								inverse_mapping[id_media] = id
-								mapping[id] = {"origin": origin, "type": "img_upload", "tweets": [id_tweet], "description":text_tweet}
+					id_tweet = str(tw["id"])
 
+					text_tweet = tw["text"]
+					text_tweet = re.sub(r"http\S+",'',text_tweet)
 
-						except urllib.error.HTTPError:
-							print("404")
+					# Si le texte n'est pas vide, on crée un enregistrement associé au tweet
+					if id_tweet not in inverse_mapping :
+						id = len(inverse_mapping)
+						inverse_mapping[id_tweet] = id
+						mapping[id] = {"origin":str(id_tweet), "type":"tweet", "tweets":[id_tweet],"description":text_tweet}
 
 
-				# On s'occupe des entités (urls + images)
-				if "urls" in tw["entities"] :
-					for u in tw["entities"]["urls"] :
-						url = u["expanded_url"]
-						#print("************************************")
-						print("\t",url)
+					# On s'occupe du champ media (les images uploadees)
+					if "media" in tw["entities"] :
+						for m in tw["entities"]["media"] :
+							try:
+								id_media = id_tweet+"_upload_"+m["media_url"].split("/")[-1]
+								origin = m["media_url"]
+								urllib.request.urlretrieve(origin, dir_img+id_media)
 
-						try :
-							req = requests.get(url,verify=False, timeout=5)
-
-							if req.status_code == 200 :
-								id_media = req.url
-								origin = req.url
-								#print("\t", req.url)
-
-								# Gestion image (le lien est directement une image) :
-								if isImg(req.url) :
-									try:
-										id_media = req.url
-										origin = req.url
-										urllib.request.urlretrieve(req.url, dir_img + "remote_" + req.url.split("/")[-1])
-
-										# Ajout dans la structure de mapping de l'image url
-										if id_media not in inverse_mapping:
-											id = len(inverse_mapping)
-											inverse_mapping[id_media] = id
-											mapping[id] = {"origin": origin, "type": "img_url", "tweets": [id_tweet], "description": text_tweet}
-										else :
-											mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-											mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+								# Ajout dans la structure de mapping de l'image uploadee
+								if id_media not in inverse_mapping:
+									id = len(inverse_mapping)
+									inverse_mapping[id_media] = id
+									mapping[id] = {"origin": origin, "type": "img_upload", "tweets": [id_tweet], "description":text_tweet}
 
 
+							except urllib.error.HTTPError:
+								print("404")
 
-									except urllib.error.HTTPError:
-										print("404")
-								else :
 
-									content = req.content
-									soup = BeautifulSoup(content, 'html.parser')
+					# On s'occupe des entités (urls + images)
+					if "urls" in tw["entities"] :
+						for u in tw["entities"]["urls"] :
+							url = u["expanded_url"]
+							#print("************************************")
+							print("\t",url)
 
-									if soup.find("title"):
+							try :
+								req = requests.get(url,verify=False, timeout=5)
 
-										type_lien = getType(soup)
+								if req.status_code == 200 :
+									id_media = req.url
+									origin = req.url
+									#print("\t", req.url)
 
-										if type_lien == "video" :
-											# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
-											desc = extractDescription(soup)
-											print(desc)
+									# Gestion image (le lien est directement une image) :
+									if isImg(req.url) :
+										try:
+											id_media = req.url
+											origin = req.url
+											urllib.request.urlretrieve(req.url, dir_img + "remote_" + req.url.split("/")[-1])
 
 											# Ajout dans la structure de mapping de l'image url
 											if id_media not in inverse_mapping:
 												id = len(inverse_mapping)
 												inverse_mapping[id_media] = id
-												mapping[id] = {"origin": origin, "type": "video", "tweets": [id_tweet], "description": text_tweet+" "+desc}
-											else :
-												mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-												mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
-
-										elif type_lien == "image" :
-											origin = soup.find("meta", property="og:image")["content"]
-											id_media = origin.split("/")[-1]
-											urllib.request.urlretrieve(origin,dir_img + "html_" + id_media)
-											desc = extractDescription(soup)
-
-											# Ajout dans la structure de mapping de l'image "html"
-											if id_media not in inverse_mapping:
-												id = len(inverse_mapping)
-												inverse_mapping[id_media] = id
-												mapping[id] = {"origin": origin, "type": "img_html", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+												mapping[id] = {"origin": origin, "type": "img_url", "tweets": [id_tweet], "description": text_tweet}
 											else :
 												mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
 												mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
 
 
-										elif type_lien == "news" :
-											desc = extractDescription(soup)
-											# Ajout dans la structure de mapping de la news
-											if id_media not in inverse_mapping:
-												id = len(inverse_mapping)
-												inverse_mapping[id_media] = id
-												mapping[id] = {"origin": origin, "type": "news", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+
+										except urllib.error.HTTPError:
+											print("404")
+									else :
+
+										content = req.content
+										soup = BeautifulSoup(content, 'html.parser')
+
+										if soup.find("title"):
+
+											type_lien = getType(soup)
+
+											if type_lien == "video" :
+												# Une video ne pouvant pas être telechargée, on la décrit par son url et sa description
+												desc = extractDescription(soup)
+												print(desc)
+
+												# Ajout dans la structure de mapping de l'image url
+												if id_media not in inverse_mapping:
+													id = len(inverse_mapping)
+													inverse_mapping[id_media] = id
+													mapping[id] = {"origin": origin, "type": "video", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+												else :
+													mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+													mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+											elif type_lien == "image" :
+												origin = soup.find("meta", property="og:image")["content"]
+												id_media = origin.split("/")[-1]
+												urllib.request.urlretrieve(origin,dir_img + "html_" + id_media)
+												desc = extractDescription(soup)
+
+												# Ajout dans la structure de mapping de l'image "html"
+												if id_media not in inverse_mapping:
+													id = len(inverse_mapping)
+													inverse_mapping[id_media] = id
+													mapping[id] = {"origin": origin, "type": "img_html", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+												else :
+													mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+													mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+
+											elif type_lien == "news" :
+												desc = extractDescription(soup)
+
+												# on vire ce qu'il y a apres ? dans l'url
+												id_media = id_media.split("?")[0]
+												origin = origin.split("?")[0]
+
+
+												# Ajout dans la structure de mapping de la news
+												if id_media not in inverse_mapping:
+													id = len(inverse_mapping)
+													inverse_mapping[id_media] = id
+													mapping[id] = {"origin": origin, "type": "news", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+												else :
+													mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+													mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+
+
 											else :
-												mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-												mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+												#print(req.content)
+												desc = extractDescription(soup)
+												# on vire ce qu'il y a apres ? dans l'url
+												id_media = id_media.split("?")[0]
+												origin = origin.split("?")[0]
+												# Ajout dans la structure de mapping de la news
+												if id_media not in inverse_mapping:
+													id = len(inverse_mapping)
+													inverse_mapping[id_media] = id
+													mapping[id] = {"origin": origin, "type": "website", "tweets": [id_tweet], "description": text_tweet+" "+desc}
+												else :
+													mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+													mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
 
 
-										else :
-											#print(req.content)
-											desc = extractDescription(soup)
-											# Ajout dans la structure de mapping de la news
-											if id_media not in inverse_mapping:
-												id = len(inverse_mapping)
-												inverse_mapping[id_media] = id
-												mapping[id] = {"origin": origin, "type": "website", "tweets": [id_tweet], "description": text_tweet+" "+desc}
-											else :
-												mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
-												mapping[inverse_mapping[id_media]]["description"] += (" "+text_tweet)
+											desc_lien = soup.find("meta",  property="og:description")
+											image_lien = soup.find("meta", property="og:image")
 
-
-										desc_lien = soup.find("meta",  property="og:description")
-										image_lien = soup.find("meta", property="og:image")
-
-									#print("AFFICHAGE DES META")
-									#print(type_lien)
-									#print(desc_lien)
-									#print(image_lien)
-									#sys.exit()
+										#print("AFFICHAGE DES META")
+										#print(type_lien)
+										#print(desc_lien)
+										#print(image_lien)
+										#sys.exit()
 
 
 
 
 
 
-							#print(req.content)
-						except requests.exceptions.Timeout :
-							print("\t\tsocket.timeout")
-						except requests.exceptions.ConnectionError :
-							print("\t\tsocket.gaierror")
-						except requests.exceptions.ContentDecodingError :
-							print("\t\tcontent.decoding.error")
-						except requests.exceptions.TooManyRedirects :
-							print("\t\trequests.exceptions.TooManyRedirects")
+								#print(req.content)
+							except requests.exceptions.Timeout :
+								print("\t\tsocket.timeout")
+							except requests.exceptions.ConnectionError :
+								print("\t\tsocket.gaierror")
+							except requests.exceptions.ContentDecodingError :
+								print("\t\tcontent.decoding.error")
+							except requests.exceptions.TooManyRedirects :
+								print("\t\trequests.exceptions.TooManyRedirects")
 
 		for id in mapping :
 			obj = mapping[id]
