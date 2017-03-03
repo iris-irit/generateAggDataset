@@ -40,17 +40,25 @@ def getType(soup) :
 
 	balise_type_lien = soup.find("meta", property="og:type")
 	if balise_type_lien :
-		type_lien = balise_type_lien["content"].lower()
-		if "video" in type_lien:
-			return "video"
-		elif "photo" in type_lien :
-			return "photo"
-		elif "article" in type_lien :
-			return "news"
+
+		if balise_type_lien.has_attr("content") :
+
+			type_lien = balise_type_lien["content"].lower()
+
+
+			if "video" in type_lien:
+				return "video"
+			elif "photo" in type_lien :
+				return "photo"
+			elif "article" in type_lien :
+				return "news"
+			else :
+				return "website"
 		else :
 			return "website"
 	else :
 		return "website"
+
 
 
 def alreadyExtracted(eventId) :
