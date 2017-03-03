@@ -304,9 +304,11 @@ for eventId in listEventOk :
 
 							#print(req.content)
 						except requests.exceptions.Timeout :
-							print("socket.timeout")
+							print("\t\tsocket.timeout")
 						except requests.exceptions.ConnectionError :
-							print("socket.gaierror")
+							print("\t\tsocket.gaierror")
+						except requests.exceptions.ContentDecodingError :
+							print("\t\tcontent.decoding.error")
 
 		for id in mapping :
 			obj = mapping[id]
