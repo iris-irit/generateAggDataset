@@ -17,6 +17,7 @@ def isImg(f) :
 def extractDescription(soup):
 	og = soup.find("meta",  property="og:description")
 	if og :
+		print(og)
 		return og["content"]
 	else :
 		name = soup.find("meta", {"name":"description"})
@@ -189,13 +190,14 @@ for eventId in listEventOk :
 					for u in tw["entities"]["urls"] :
 						url = u["expanded_url"]
 						#print("************************************")
-						print("\t",url)
+
 						try :
 							req = requests.get(url,verify=False, timeout=5)
 
 							if req.status_code == 200 :
 								id_media = req.url
 								origin = req.url
+								print("\t", req.url)
 
 								# Gestion image (le lien est directement une image) :
 								if isImg(req.url) :
