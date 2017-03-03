@@ -181,7 +181,7 @@ for eventId in listEventOk :
 					if "media" in tw["entities"] :
 						for m in tw["entities"]["media"] :
 							try:
-								id_media = id_tweet+"_upload_"+m["media_url"].split("/")[-1]
+								id_media = "upload_"+m["media_url"].split("/")[-1]
 								origin = m["media_url"]
 								urllib.request.urlretrieve(origin, dir_img+id_media)
 
@@ -190,6 +190,9 @@ for eventId in listEventOk :
 									id = len(inverse_mapping)
 									inverse_mapping[id_media] = id
 									mapping[id] = {"origin": origin, "type": "img_upload", "tweets": [id_tweet], "description":text_tweet}
+								else:
+									mapping[inverse_mapping[id_media]]["tweets"].append(id_tweet)
+									mapping[inverse_mapping[id_media]]["description"] += (" " + text_tweet)
 
 
 							except urllib.error.HTTPError:
