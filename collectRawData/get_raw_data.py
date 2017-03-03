@@ -15,6 +15,9 @@ def isImg(f) :
 
 
 def extractDescription(soup):
+
+	print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
 	og = soup.find("meta",  property="og:description")
 	if og :
 		print(og)
