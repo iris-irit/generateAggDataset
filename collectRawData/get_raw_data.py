@@ -193,6 +193,7 @@ for eventId in listEventOk :
 					for u in tw["entities"]["urls"] :
 						url = u["expanded_url"]
 						#print("************************************")
+						print("\t",url)
 
 						try :
 							req = requests.get(url,verify=False, timeout=5)
@@ -200,7 +201,7 @@ for eventId in listEventOk :
 							if req.status_code == 200 :
 								id_media = req.url
 								origin = req.url
-								print("\t", req.url)
+								#print("\t", req.url)
 
 								# Gestion image (le lien est directement une image) :
 								if isImg(req.url) :
