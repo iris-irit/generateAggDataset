@@ -11,7 +11,7 @@ def word_feats(words):
     return dict([(word, True) for word in words.split() if word not in stopset])
 
 stopset = list(set(stopwords.words('english')))
-morewords = 'delivery', 'shipment', 'only', 'copy', 'attach', 'material'
+morewords = 'tweet', 'tweets'
 stopset.append(morewords)
 
 # Lecture du fichier
