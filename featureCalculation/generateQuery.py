@@ -21,7 +21,7 @@ with open(path_event_description, "r") as f :
 		id_event = tab[0]
 		raw_text = tab[1]
 
-		res = word_feats(raw_text.split(" "))
+		res = word_feats(raw_text)
 		print(res)
 
 
