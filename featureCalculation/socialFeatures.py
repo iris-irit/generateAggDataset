@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 
 
@@ -33,3 +33,5 @@ for repEvent in os.listdir(path_events) :
 		for tw in mapping[idDoc]["tweets"] :
 			data = lookupTweet(int(tw))
 			print(data)
+
+			sys.exit()
