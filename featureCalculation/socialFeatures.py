@@ -41,7 +41,7 @@ for repEvent in os.listdir(path_events) :
 		retweets = 0
 		followers = 0
 
-		features[idDoc]
+		features[idDoc] = {}
 
 		for tw in mapping[idDoc]["tweets"] :
 			data = lookupTweet(int(tw))
