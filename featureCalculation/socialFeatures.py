@@ -47,11 +47,11 @@ for repEvent in os.listdir(path_events) :
 			data = lookupTweet(int(tw))
 			print(data)
 
-			favourites += data["favourite_count"]
+			favourites += data["favorite_count"]
 			retweets += data["retweet_count"]
 			followers += data["user"]["followers_count"]
 
-		features[idDoc]["favourite_count"] = favourites
+		features[idDoc]["favorite_count"] = favourites
 		features[idDoc]["retweet_count"] = retweets
 		features[idDoc]["followers_count"] = followers
 
