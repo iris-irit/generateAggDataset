@@ -14,12 +14,15 @@ queries = {}
 
 def word_feats(words):
 	tokenizer = RegexpTokenizer(r'\w+')
-	t = tokenizer.tokenize(words)
+	t = tokenizer.tokenize(words.lower())
 	return [word for word in t if word not in stopset]
 
 stopset = list(set(stopwords.words('english')))
 morewords = 'tweet', 'tweets'
 stopset.append(morewords)
+
+
+
 
 # Lecture du fichier
 with open(path_event_description, "r") as f :
