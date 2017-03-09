@@ -55,4 +55,5 @@ for repEvent in os.listdir(path_events) :
 		features[idDoc]["retweet_count"] = retweets
 		features[idDoc]["followers_count"] = followers
 
-	json.dump(features,path_features+repEvent+"/social.json")
+	with open(path_features+repEvent+"/social.json", "w") as fout :
+		json.dump(features,fout)
