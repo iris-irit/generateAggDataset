@@ -23,7 +23,7 @@ for repEvent in os.listdir(path_events) :
 	mapping = {}
 	inverse = {}
 
-	if not os.path.isfile(path_features+repEvent) :
+	if not os.path.exists(path_features+repEvent) :
 		os.mkdir(path_features+repEvent)
 
 	with open(path_json+"data_"+repEvent+".txt", "r") as fjson :
