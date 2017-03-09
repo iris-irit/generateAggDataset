@@ -1,4 +1,9 @@
 from nltk.corpus import stopwords
+from nltk.tokenize import RegexpTokenizer
+
+tokenizer = RegexpTokenizer(r'\w+')
+
+
 
 # Récuperer le fichier contenant les sujets
 path_event_description = "/projets/iris/CORPUS/DOCS/TWITTER_EVENTS_2012/Events2012/event_descriptions.tsv"
@@ -8,7 +13,9 @@ path_queries = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/queries
 queries = {}
 
 def word_feats(words):
-    return dict([(word, True) for word in words.split() if word not in stopset])
+	tokenizer = RegexpTokenizer(r'\w+')
+	t = tokenizer.tokenize(words)
+	return dict([(word, True) for word in t if word not in stopset])
 
 stopset = list(set(stopwords.words('english')))
 morewords = 'tweet', 'tweets'
