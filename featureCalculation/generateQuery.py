@@ -18,8 +18,8 @@ def word_feats(words):
 	return [word for word in t if word not in stopset]
 
 stopset = list(set(stopwords.words('english')))
-morewords = 'tweet', 'tweets'
-stopset.append(morewords)
+morewords = 'tweet', 'tweets', 'discuss', 'discussing', 'many', 'u', 'discussa'
+stopset.extend(morewords)
 
 
 
