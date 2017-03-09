@@ -15,7 +15,7 @@ queries = {}
 def word_feats(words):
 	tokenizer = RegexpTokenizer(r'\w+')
 	t = tokenizer.tokenize(words)
-	return dict([(word, True) for word in t if word not in stopset])
+	return [word for word in t if word not in stopset]
 
 stopset = list(set(stopwords.words('english')))
 morewords = 'tweet', 'tweets'
