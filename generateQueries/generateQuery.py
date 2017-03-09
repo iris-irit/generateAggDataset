@@ -25,7 +25,8 @@ stopset = list(set(stopwords.words('english')))
 morewords = 'tweet', 'tweets', 'discuss', 'discussing', 'many', 'u', 'discussa'
 stopset.extend(morewords)
 
-
+with open(path_queries, "a") as f:
+	f.write("<parameters>\n")
 
 
 # Lecture du fichier
@@ -39,11 +40,10 @@ with open(path_event_description, "r") as f :
 		print(res)
 
 		with open(path_queries, "a") as f:
-			f.write("<top>\n<num>"+id_event+"</num>\n"
-			                                "<title>"+' '.join(res)+"</title>\n"
-			                                "<desc>"+raw_text+"</desc>\n"
-			                                "<narr></narr>\n</top>\n")
+			f.write("<query>\n<number>"+id_event+"</number>\n"
+			                                "<text>"+' '.join(res)+"</text>\n</query>")
 
 
 
-
+with open(path_queries, "a") as f:
+	f.write("</parameters>\n")

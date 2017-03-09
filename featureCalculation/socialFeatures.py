@@ -9,4 +9,4 @@ name_dir_inverse = "/mapping/inverse.json"
 
 
 for repEvent in os.listdir(path_events) :
-	print(repEvent)
+	with open(path_json+repEvent)
