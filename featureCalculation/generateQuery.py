@@ -1,5 +1,6 @@
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
+import os
 
 tokenizer = RegexpTokenizer(r'\w+')
 
@@ -9,6 +10,9 @@ tokenizer = RegexpTokenizer(r'\w+')
 path_event_description = "/projets/iris/CORPUS/DOCS/TWITTER_EVENTS_2012/Events2012/event_descriptions.tsv"
 path_queries = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/queries_all_events.xml"
 
+
+if os.path.isfile(path_queries) :
+	os.remove(path_queries)
 
 queries = {}
 
@@ -33,6 +37,12 @@ with open(path_event_description, "r") as f :
 
 		res = word_feats(raw_text)
 		print(res)
+
+		with open(path_queries, "a") as f:
+			f.write("<top>\n<num>"+id_event+"</num>\n"
+			                                "<title>"+' '.join(res)+"</title>\n"
+			                                "<desc>"+raw_text+"</desc>\n"
+			                                "<narr></narr>\n</top>\n")
 
 
 
