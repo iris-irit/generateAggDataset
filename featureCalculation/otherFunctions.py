@@ -21,7 +21,7 @@ def getHistogram(json):
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
 		print(d.strftime('%Y-%m-%d at %H'))
 
-		key = str(d.day)+"_"+str(d.hour)
+		key = str(d.day)+"_"+str(d.hour)+"_"+str(d.minute)
 		hist.setdefault(key,0)
 		hist[key] += 1
 
