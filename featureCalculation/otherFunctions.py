@@ -2,6 +2,7 @@ import pprint
 import sys
 from datetime import datetime
 import pandas as pd
+import numpy as np
 
 def getDate(json):
 
@@ -31,5 +32,11 @@ def getHistogram(json):
 	for k in sorted(hist):
 		df.loc[i] = [i,k,hist[k]]
 		i += 1
+
+	# Bin the data frame by "a" with 10 bins...
+	bins = np.linspace(df.id.min(), df.id.max(), 10)
+	groups = df.groupby(np.digitize(df.id, bins))
+
+	print(groups)
 
 	return df
