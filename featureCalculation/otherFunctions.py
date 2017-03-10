@@ -26,4 +26,8 @@ def getHistogram(json):
 		hist.setdefault(key,0)
 		hist[key] += 1
 
-	return pd.DataFrame.from_dict(hist)
+	df = pd.DataFrame(columns=["count"])
+	for k in hist:
+		df.loc[k] = hist[k]
+
+	return df
