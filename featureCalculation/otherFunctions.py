@@ -26,10 +26,10 @@ def getHistogram(json):
 		hist.setdefault(key,0)
 		hist[key] += 1
 
-	df = pd.DataFrame(columns=["time","count"])
+	df = pd.DataFrame(columns=["id","time","count"])
 	i = 0
-	for k in hist:
-		df.loc[i] = [k,hist[k]]
+	for k in sorted(hist):
+		df.loc[i] = [i,k,hist[k]]
 		i += 1
 
 	return df
