@@ -11,7 +11,7 @@ def getDate(json):
 		print(d.strftime('%Y-%m-%d at %H'))
 		sys.exit()
 
-def gestHistogram(json):
+def getHistogram(json):
 
 	hist = {}
 
