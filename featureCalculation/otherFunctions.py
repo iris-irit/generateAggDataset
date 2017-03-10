@@ -26,4 +26,4 @@ def getHistogram(json):
 		hist.setdefault(key,0)
 		hist[key] += 1
 
-	return pd.DataFrame._from_arrays(sorted(hist.items()))
+	return pd.DataFrame.from_dict(hist)
