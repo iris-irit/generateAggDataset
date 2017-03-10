@@ -29,5 +29,5 @@ for repEvent in os.listdir(path_events) :
 		json_raw = json.load(fjson)
 
 
-	print(getHistogram(json_raw))
+	print(getBurstiness(json_raw))
 	sys.exit()

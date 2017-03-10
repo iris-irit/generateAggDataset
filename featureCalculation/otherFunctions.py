@@ -20,7 +20,7 @@ def findBin(id,l):
 			return (i-1)
 
 
-def getHistogram(json):
+def getBurstiness(json):
 
 	hist = {}
 	dictTwHour = {}
