@@ -29,4 +29,5 @@ for repEvent in os.listdir(path_events) :
 		json_raw = json.load(fjson)
 
 
-	getDate(json_raw)
+	print(getHistogram(json_raw))
+	sys.exit()
