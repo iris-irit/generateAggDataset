@@ -35,9 +35,9 @@ def getHistogram(json):
 
 	# Bin the data frame by "a" with 10 bins...
 	bins = np.linspace(df.id.min(), df.id.max(), 10)
-	groups = df.groupby(np.digitize(df.id, bins))
+	groups = df.groupby(pd.cut(df.id, bins))
 
 	print(bins)
-	print(groups.sum()[0])
+	print(groups.sum().count)
 
 	return df
