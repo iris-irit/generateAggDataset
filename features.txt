@@ -1,15 +1,14 @@
 SOCIAL FEATURES :
-- nbFollowers
-- nbFavorites
-- nbRetweets
+- followers_count => ok
+- favorite_count => ok
+- retweet_count => ok
+
 - UserActive
 - Diversité des tweets emis par l'utilisateur
 
 
 CONTENT FEATURES
 
-Attetion, si le document est autre chose qu'un tweet ou une image uploadee sa description est l'union du tweet "contenant" et la valeur de la balise meta og:description
-(si elle existe, sinon ca sera le titre de la page web)
 
 - Presence des termes de la requêtes
 - Presence des urls (valable pour les tweets uniquements, sinon 0 => A reflechir)
@@ -19,18 +18,14 @@ Attetion, si le document est autre chose qu'un tweet ou une image uploadee sa de
 - Opinion (pour l'instant on dit que l'on ne veut que des trucs neutres)
 - Modèles évalués par rapport au label de l'évènement
 
-Other features
+OTHER FEATURES
+
 - fraîcheur
--
+- burstiness
 
 Reflechir à une pondération sur l'importance des features (par exemple la fraîcheur)
 
 
 
-Pour les images, plusieurs cas possibles :
-1) Soit c'est dans media (uplad depuis pc) => on récupère l'image avec urlretrieve
-2) Soit c'est une image distante =>
-        a) c'est une page html (flicker) => voir la balise meta og:type (image)
-        b) c'est une image (extension .jpg, .png, ...) => il faut tester l'extension de l'url
 
 
