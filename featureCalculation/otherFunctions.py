@@ -38,6 +38,6 @@ def getHistogram(json):
 	groups = df.groupby(np.digitize(df.id, bins))
 
 	print(bins)
-	print(groups.sum())
+	print(groups.sum()[0])
 
 	return df
