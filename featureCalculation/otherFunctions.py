@@ -1,6 +1,7 @@
 import pprint
 import sys
 from datetime import datetime
+import pandas as pd
 
 def getDate(json):
 
@@ -25,4 +26,4 @@ def getHistogram(json):
 		hist.setdefault(key,0)
 		hist[key] += 1
 
-	return sorted(hist.items())
+	return pd.DataFrame._from_arrays(sorted(hist.items()))
