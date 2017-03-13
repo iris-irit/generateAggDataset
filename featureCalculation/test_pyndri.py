@@ -54,7 +54,8 @@ with pyndri.open(sys.argv[1]) as index:
 		# language model with Dirichlet smoothing.
 		lm_query_env = pyndri.QueryEnvironment(
 			index, rules=('method:dirichlet,mu:5000',))
-		print(lm_query_env.query('hello world'))
+		print(lm_query_env.query('hello world', results_requested=-5,
+                                    include_snippets=True))
 
 		# Constructs a QueryEnvironment that uses the TF-IDF retrieval model.
 		#
