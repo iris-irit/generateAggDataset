@@ -47,4 +47,6 @@ for repEvent in os.listdir(path_events) :
 		}
 
 	print(features)
-	sys.exit()
+
+	with open(path_features+repEvent+"/other.json", "w") as fout :
+		json.dump(features,fout)
