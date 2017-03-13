@@ -20,15 +20,31 @@ name_dir_inverse = "/mapping/inverse.json"
 features = {}
 
 for repEvent in os.listdir(path_events) :
-	json_raw = {}
-	mapping = {} # Pas  utile pour l'instant
-	inverse = {} # Pas  utile pour l'instant
+
+	if not os.path.exists(path_features+repEvent) :
+		os.mkdir(path_features+repEvent)
 
 
 	with open(path_json+"data_"+repEvent+".txt", "r") as fjson :
 		json_raw = json.load(fjson)
 
+	burst = getBurstiness(json_raw)
+	fresh = getFreshness(json_raw)
 
-	print(getBurstiness(json_raw))
-	print(getFreshness(json_raw))
+
+	with open(path_events+repEvent+name_dir_mapping, "r") as fjson :
+		mapping = json.load(fjson)
+
+	for docId in mapping :
+		lTweets = mapping[docId]["tweets"]
+
+		listBurst = [burst[x] for x in lTweets]
+		listFresh = [fresh[x] for x in lTweets]
+
+		features[docId] = {
+			"freshness": sum(listFresh) / len(listFresh),
+			"burstiness": sum(listBurst) / len(listBurst)
+		}
+
+	print(features)
 	sys.exit()
