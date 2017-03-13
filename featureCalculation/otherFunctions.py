@@ -1,6 +1,6 @@
 import pprint
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 
@@ -60,6 +60,7 @@ def getBurstiness(json):
 	while dCurrent < dateMax :
 		k = getKeyValue(dCurrent)
 		hist.setdefault(k,0)
+		dCurrent += timedelta(minutes=1)
 
 
 	df = pd.DataFrame(columns=["id","time","count"])
