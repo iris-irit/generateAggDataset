@@ -30,4 +30,5 @@ for repEvent in os.listdir(path_events) :
 
 
 	print(getBurstiness(json_raw))
+	print(getFreshness(json_raw))
 	sys.exit()

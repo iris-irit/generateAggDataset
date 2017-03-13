@@ -89,5 +89,28 @@ def getBurstiness(json):
 
 def getFreshness(json) :
 
-	# il faut
-	return True
+	hist = {}
+	res = {}
+
+	dateMin = datetime.today()
+	dateMax = datetime(2010,1,1)
+
+	for doc in json :
+
+		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
+		print(d.strftime('%Y-%m-%d at %H:%M'))
+
+		hist[doc["id"]] = d
+
+		if d < dateMin :
+			dateMin = d
+		if d > dateMax :
+			dateMax = d
+
+
+	delta = (dateMax - dateMin).seconds()
+
+	for k in hist :
+		res[k] = 1 - ( (dateMax - hist[k]).seconds() / delta )
+
+	return res
