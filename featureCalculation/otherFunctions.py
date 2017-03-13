@@ -19,6 +19,9 @@ def findBin(id,l):
 		if id >= l[i-1] and id <= l[i] :
 			return (i-1)
 
+def getKeyValue(d) :
+	return str(d.day)+"_"+str(d.hour)+"_"+d.strftime("%M")
+
 
 def getBurstiness(json):
 
@@ -29,6 +32,9 @@ def getBurstiness(json):
 	mapTweetBin = {}
 	res = {}
 
+	dateMin = datetime.today()
+	dateMax = datetime(2010,1,1)
+
 	nbTweets = len(json)
 
 	for doc in json :
@@ -37,10 +43,24 @@ def getBurstiness(json):
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
 		print(d.strftime('%Y-%m-%d at %H:%M'))
 
-		key = str(d.day)+"_"+str(d.hour)+"_"+d.strftime("%M")
+		truncatedDate = datetime(year=d.year,month=d.month,day=d.day,hour=d.hour, minute=d.minute)
+
+		if truncatedDate < dateMin :
+			dateMin = truncatedDate
+		if truncatedDate > dateMax :
+			dateMax = truncatedDate
+
+		key = getKeyValue(d)
 		hist.setdefault(key,0)
 		hist[key] += 1
 		dictTwHour[doc["id"]] = key
+
+	# Ici il faut combler les trous dans l'historique
+	dCurrent = datetime(year=dateMin.year,month=dateMin.month,day=dateMin.day,hour=dateMin.hour, minute=dateMin.minute)
+	while dCurrent < dateMax :
+		k = getKeyValue(dCurrent)
+		hist.setdefault(k,0)
+
 
 	df = pd.DataFrame(columns=["id","time","count"])
 	i = 0
@@ -64,3 +84,9 @@ def getBurstiness(json):
 		res[idTw] =  sumBin[mapTweetBin[idTw]] /nbTweets
 
 	return res
+
+
+def getFreshness(json) :
+
+	# il faut
+	return True
