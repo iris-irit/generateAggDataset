@@ -21,6 +21,8 @@ features = {}
 
 for repEvent in os.listdir(path_events) :
 
+	print("["+repEvent+"]")
+
 	if not os.path.exists(path_features+repEvent) :
 		os.mkdir(path_features+repEvent)
 

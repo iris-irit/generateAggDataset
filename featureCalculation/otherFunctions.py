@@ -10,7 +10,7 @@ def getDate(json):
 		pprint.pprint(doc)
 
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
-		print(d.strftime('%Y-%m-%d at %H'))
+		#print(d.strftime('%Y-%m-%d at %H'))
 		sys.exit()
 
 def findBin(id,l):
@@ -41,7 +41,7 @@ def getBurstiness(json):
 		#pprint.pprint(doc)
 
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
-		print(d.strftime('%Y-%m-%d at %H:%M'))
+		#print(d.strftime('%Y-%m-%d at %H:%M'))
 
 		truncatedDate = datetime(year=d.year,month=d.month,day=d.day,hour=d.hour, minute=d.minute)
 
@@ -98,7 +98,7 @@ def getFreshness(json) :
 	for doc in json :
 
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
-		print(d.strftime('%Y-%m-%d at %H:%M'))
+		#print(d.strftime('%Y-%m-%d at %H:%M'))
 
 		d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute, second=d.second)
 
@@ -109,7 +109,7 @@ def getFreshness(json) :
 		if d2 > dateMax :
 			dateMax = d2
 
-	print(dateMax - dateMin)
+	#print(dateMax - dateMin)
 	delta = (dateMax - dateMin).total_seconds()
 
 	for k in hist :
