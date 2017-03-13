@@ -98,6 +98,7 @@ def getFreshness(json) :
 	for doc in json :
 
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
+		d.replace(tzinfo=None)
 		print(d.strftime('%Y-%m-%d at %H:%M'))
 
 		hist[doc["id"]] = d
