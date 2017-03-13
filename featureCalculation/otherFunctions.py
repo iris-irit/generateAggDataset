@@ -92,7 +92,7 @@ def getFreshness(json) :
 	hist = {}
 	res = {}
 
-	dateMin = datetime.today()
+	dateMin = datetime.today().replace(tzinfo=None)
 	dateMax = datetime(2010,1,1)
 
 	for doc in json :
