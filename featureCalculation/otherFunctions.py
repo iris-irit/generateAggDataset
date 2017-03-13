@@ -102,7 +102,7 @@ def getFreshness(json) :
 
 		d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute, second=d.second)
 
-		hist[doc["id"]] = d
+		hist[doc["id"]] = d2
 
 		if d2 < dateMin :
 			dateMin = d2
