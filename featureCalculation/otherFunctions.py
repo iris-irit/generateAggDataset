@@ -92,21 +92,22 @@ def getFreshness(json) :
 	hist = {}
 	res = {}
 
-	dateMin = datetime.today().replace(tzinfo=None)
+	dateMin = datetime.today()
 	dateMax = datetime(2010,1,1)
 
 	for doc in json :
 
 		d = datetime.strptime(doc["created_at"], '%a %b %d %H:%M:%S %z %Y')
-		d.replace(tzinfo=None)
 		print(d.strftime('%Y-%m-%d at %H:%M'))
+
+		d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute, second=d.second)
 
 		hist[doc["id"]] = d
 
-		if d < dateMin :
-			dateMin = d
-		if d > dateMax :
-			dateMax = d
+		if d2 < dateMin :
+			dateMin = d2
+		if d2 > dateMax :
+			dateMax = d2
 
 
 	delta = (dateMax - dateMin).seconds()
