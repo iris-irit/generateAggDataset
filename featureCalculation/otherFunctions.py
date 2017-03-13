@@ -109,7 +109,7 @@ def getFreshness(json) :
 		if d2 > dateMax :
 			dateMax = d2
 
-
+	print(dateMax - dateMin)
 	delta = (dateMax - dateMin).seconds()
 
 	for k in hist :
