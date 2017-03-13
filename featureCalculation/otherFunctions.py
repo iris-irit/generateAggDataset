@@ -53,7 +53,7 @@ def getBurstiness(json):
 		key = getKeyValue(d)
 		hist.setdefault(key,0)
 		hist[key] += 1
-		dictTwHour[doc["id"]] = key
+		dictTwHour[doc["id_str"]] = key
 
 	# Ici il faut combler les trous dans l'historique
 	dCurrent = datetime(year=dateMin.year,month=dateMin.month,day=dateMin.day,hour=dateMin.hour, minute=dateMin.minute)
@@ -102,7 +102,7 @@ def getFreshness(json) :
 
 		d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute, second=d.second)
 
-		hist[doc["id"]] = d2
+		hist[doc["id_str"]] = d2
 
 		if d2 < dateMin :
 			dateMin = d2
