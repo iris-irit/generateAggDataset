@@ -2,6 +2,7 @@ import os, sys
 import json
 import tweepy
 import pprint
+from datetime import datetime
 
 from socialFunctions import *
 
@@ -44,6 +45,7 @@ name_dir_inverse = "/mapping/inverse.json"
 features = {}
 mappingDocTweets = {}
 mappingTweetUser = {}
+mappingTweetDate = {}
 userActivity = {}
 
 for repEvent in os.listdir(path_events) :
@@ -71,6 +73,9 @@ for repEvent in os.listdir(path_events) :
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw), json_raw)
 				mappingTweetUser[tw] = data['user']['screen_name']
+				d = datetime.strptime(data["created_at"], '%a %b %d %H:%M:%S %z %Y')
+				d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute)
+				mappingTweetDate[tw] = d2
 
 	# Pour chaque tweet concerné par l'évènement, on recherche l'activité de l'utilisateur (en évitant de réinterroger si
 	# on a déjà croisé cet utilisateur
@@ -80,6 +85,10 @@ for repEvent in os.listdir(path_events) :
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
 			res = get_all_tweets(mappingTweetUser[tw],api)
 			pprint.pprint(res)
+
+			nb = getNbInPeriod(res,mappingTweetDate[tw])
+
+			print("nb tweets in period:",nb)
 			sys.exit(0)
 
 
