@@ -2,7 +2,7 @@ import os, sys
 import json
 import tweepy
 import pprint
-import datetime
+from datetime import datetime
 
 from socialFunctions import *
 
