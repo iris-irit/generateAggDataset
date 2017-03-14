@@ -47,7 +47,7 @@ for repEvent in os.listdir(path_events) :
 			print(data)
 
 			urls += len(data["entities"]["urls"])
-			hashtags += data(["entities"]["hahstags"])
+			hashtags += len(data(["entities"]["hahstags"])
 
 		features[idDoc]["url_count"] = urls
 #		features[idDoc]["url_exist"] = urls
