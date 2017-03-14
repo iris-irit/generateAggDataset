@@ -97,7 +97,10 @@ for repEvent in os.listdir(path_events) :
 			if nb > maxNb :
 				maxNb = nb
 
-			userActivity[mappingTweetUser[tw]] = nb
+			if nb == 0 :
+				userActivity[mappingTweetUser[tw]] = decideBetweenZeroAndMax(res[-1],mappingTweetDate[tw])
+			else :
+				userActivity[mappingTweetUser[tw]] = nb
 
 			print("nb tweets in period:",nb)
 
@@ -107,7 +110,10 @@ for repEvent in os.listdir(path_events) :
 		features.setdefault(idDoc,{})
 		t = []
 		for tw in mapping[idDoc]["tweets"] :
-			t.append(userActivity[mappingTweetUser[tw]] / maxNb )
+			if userActivity[mappingTweetUser[tw]] != "max" :
+				t.append(userActivity[mappingTweetUser[tw]] / maxNb )
+			else :
+				t.append(1)
 		features[idDoc]["activity"] = sum(t)/len(t)
 
 	print(features)

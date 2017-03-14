@@ -59,3 +59,9 @@ def getNbInPeriod(tw,d) :
 			nb += 1
 
 	return nb
+
+def decideBetweenZeroAndMax(t,d) :
+	if t[1] > d :
+		return "max"
+	else :
+		return 0
