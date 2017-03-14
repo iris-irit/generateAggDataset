@@ -48,6 +48,7 @@ for repEvent in os.listdir(path_events):
         features[idDoc]["hashtag_exist"] = 0
         features[idDoc]["hashtag_count"] = 0
 
+        # calcul des features uniquement pour les tweets
         if mapping[idDoc]["type"] == "tweet":
             for tw in mapping[idDoc]["tweets"]:
                 data = lookupTweet(int(tw))
@@ -71,6 +72,7 @@ for repEvent in os.listdir(path_events):
 
     print ('event:',repEvent,' max_urls:', max_urls, ' max_hashtags:', max_hashtags)
 
+    # normalisation des nombres d'urls et de hashtags
     for idDoc in mapping:
         if max_urls > 0:
             features[idDoc]["url_count"] = features[idDoc]["url_count"] / max_urls
