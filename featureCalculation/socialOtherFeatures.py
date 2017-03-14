@@ -87,6 +87,10 @@ for repEvent in os.listdir(path_events) :
 	for tw in mappingTweetUser :
 
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
+
+
+			print("On cherche pour ",mappingTweetUser[tw])
+
 			res = get_all_tweets(mappingTweetUser[tw],api)
 			pprint.pprint(res)
 
@@ -122,3 +126,5 @@ for repEvent in os.listdir(path_events) :
 
 	with open(path_features+repEvent+"/socialOther.json", "w") as fout :
 		json.dump(features,fout)
+
+	sys.exit(0)
