@@ -91,6 +91,9 @@ for repEvent in os.listdir(path_events) :
 			print("On cherche pour ",mappingTweetUser[tw])
 
 			res = get_all_tweets(mappingTweetUser[tw],api)
+
+			# TODO il faudrait faire un export de res pour le stocker dans un json et avoir le texte des tweets pour le calcul de la feature sur la diversité
+
 			pprint.pprint(res)
 
 			userTweets[mappingTweetUser[tw]] = res

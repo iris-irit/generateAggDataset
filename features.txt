@@ -3,21 +3,21 @@ SOCIAL FEATURES :
 - favorite_count => ok
 - retweet_count => ok
 
-- UserActive
-- Diversité des tweets emis par l'utilisateur
+- UserActive => ok
+- Diversité des tweets emis par l'utilisateur => pas sens sur cette collection
 
 
 CONTENT FEATURES
 
 
 - Presence des termes de la requêtes
-- Presence d'urls (valable pour les tweets uniquements, sinon 0)
-- Nombre d'urls (valable pour les tweets uniquements, sinon 0)
-- Présence de hashtags (valable pour les tweets uniquements, sinon 0)
-- Nb hashtags (valable pour les tweets uniquements, sinon 0)
+- Presence d'urls (valable pour les tweets uniquements, sinon 0) => ok
+- Nombre d'urls (valable pour les tweets uniquements, sinon 0) => ok
+- Présence de hashtags (valable pour les tweets uniquements, sinon 0) => ok
+- Nb hashtags (valable pour les tweets uniquements, sinon 0) => ok
 - TReDIX (tweet reading difficulty)
 - Opinion (pour l'instant on dit que l'on ne veut que des trucs neutres)
-- Modèles évalués par rapport au label de l'évènement
+- Modèles évalués par rapport au label de l'évènement => ok (problème avec BM 25)
 
 OTHER FEATURES
 
