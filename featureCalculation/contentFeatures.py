@@ -60,8 +60,6 @@ for repEvent in os.listdir(path_events):
 
                 max_hashtags = max(hashtags,max_hashtags)
 
-            features[idDoc]["url_count"] = urls/max_urls
-
             if max_urls > 0 :
                 features[idDoc]["url_exist"] = 1
                 features[idDoc]["url_count"] = urls / max_urls
