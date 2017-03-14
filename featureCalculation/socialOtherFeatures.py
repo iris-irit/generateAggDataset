@@ -43,6 +43,7 @@ for repEvent in os.listdir(path_events) :
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw))
 				print(data)
+				print(type(tw))
 				sys.exit()
 
 
