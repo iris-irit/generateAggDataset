@@ -20,8 +20,8 @@ CONTENT FEATURES
 
 OTHER FEATURES
 
-- fraîcheur
-- burstiness
+- fraîcheur => ok
+- burstiness => ok
 
 Reflechir à une pondération sur l'importance des features (par exemple la fraîcheur)
 
