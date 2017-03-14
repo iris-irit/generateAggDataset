@@ -1,11 +1,35 @@
 import os, sys
 import json
+import tweepy
+
+from socialFunctions import *
 
 
-def lookupTweet(id) :
-	for j in json_raw :
-		if j["id"] == id :
-			return j
+
+
+
+
+
+
+
+config = {}
+config["consumer_key"] = "SCeH2iu0A9IeDie3v37yilzan"
+config["consumer_secret"] = "lifjtDGi2Okzx9FEyDJLTWQsdNGmKPlWAZPgMeUyENcETHwTS7"
+config["access_key"] = "831848639916027904-lAPXqf5MQNo33Ar36eQbPcapMuKlQxd"
+config["access_secret"] = "QvCQuTZmpE8zhWoNmvXmYW8k1ytz0BinVRgbvDHsvkxow"
+
+
+#-----------------------------------------------------------------------
+# create twitter API object
+#-----------------------------------------------------------------------
+
+auth = tweepy.OAuthHandler(config["consumer_key"], config["consumer_secret"])
+auth.set_access_token(config["access_key"], config["access_secret"])
+
+api = tweepy.API(auth, wait_on_rate_limit=True,retry_errors=131,retry_count=2)
+
+
+
 
 
 path_events = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/"
@@ -43,7 +67,7 @@ for repEvent in os.listdir(path_events) :
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw))
 				print(data)
-				print(type(tw))
+				print(tw)
 				sys.exit()
 
 
