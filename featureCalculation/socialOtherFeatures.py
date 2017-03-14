@@ -70,7 +70,7 @@ for repEvent in os.listdir(path_events) :
 
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw), json_raw)
-				mappingTweetUser[tw] = data['user']['id']
+				mappingTweetUser[tw] = data['user']['screen_name']
 
 	# Pour chaque tweet concerné par l'évènement, on recherche l'activité de l'utilisateur (en évitant de réinterroger si
 	# on a déjà croisé cet utilisateur
@@ -78,10 +78,8 @@ for repEvent in os.listdir(path_events) :
 	for tw in mappingTweetUser :
 
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
-			user = api.get_user(user_id=mappingTweetUser[tw])
-			json = user._json
-			pprint.pprint(json)
-
+			res = get_all_tweets(mappingTweetUser[tw],api)
+			pprint.pprint(res)
 			sys.exit(0)
 
 
