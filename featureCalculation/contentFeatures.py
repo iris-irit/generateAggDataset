@@ -62,17 +62,13 @@ for repEvent in os.listdir(path_events):
 
             features[idDoc]["url_count"] = urls/max_urls
 
-            if urls > 0 :
+            if max_urls > 0 :
                 features[idDoc]["url_exist"] = 1
-            else:
-                features[idDoc]["url_exist"] = 0
+                features[idDoc]["url_count"] = urls / max_urls
 
-            features[idDoc]["hashtag_count"] = hashtags/max_hashtags
-
-            if hashtags > 0:
+            if max_hashtags > 0:
                 features[idDoc]["hashtag_exist"] = 1
-            else:
-                features[idDoc]["hashtag_exist"] = 0
+                features[idDoc]["hashtag_count"] = hashtags / max_hashtags
 
     with open(path_features + repEvent + "/content.json", "w") as fout:
         json.dump(features, fout)
