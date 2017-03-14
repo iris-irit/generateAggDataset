@@ -74,7 +74,7 @@ for repEvent in os.listdir(path_events) :
 
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw), json_raw)
-				mappingTweetUser[tw] = data['user']['screen_name']
+				mappingTweetUser[tw] = data['user']['id']
 				d = datetime.strptime(data["created_at"], '%a %b %d %H:%M:%S %z %Y')
 				d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute)
 				mappingTweetDate[tw] = d2

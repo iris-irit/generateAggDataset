@@ -6,7 +6,7 @@ def lookupTweet(id,json_raw) :
 			return j
 
 
-def get_all_tweets(screen_name, api):
+def get_all_tweets(id, api):
 	# Twitter only allows access to a users most recent 3240 tweets with this method
 
 
@@ -14,7 +14,7 @@ def get_all_tweets(screen_name, api):
 	alltweets = []
 
 	# make initial request for most recent tweets (200 is the maximum allowed count)
-	new_tweets = api.user_timeline(screen_name=screen_name, count=200)
+	new_tweets = api.user_timeline(user_id=id, count=200)
 
 	# save most recent tweets
 	alltweets.extend(new_tweets)
@@ -28,7 +28,7 @@ def get_all_tweets(screen_name, api):
 		"getting tweets before %s" % (oldest)
 
 		# all subsiquent requests use the max_id param to prevent duplicates
-		new_tweets = api.user_timeline(screen_name=screen_name, count=200, max_id=oldest)
+		new_tweets = api.user_timeline(user_id=id, count=200, max_id=oldest)
 
 		# save most recent tweets
 		alltweets.extend(new_tweets)
