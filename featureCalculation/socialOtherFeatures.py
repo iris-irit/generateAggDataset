@@ -33,7 +33,6 @@ api = tweepy.API(auth, wait_on_rate_limit=True,retry_errors=131,retry_count=2)
 
 
 
-
 path_events = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/"
 path_json =  "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Preliminaries/"
 path_features = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Features/"
@@ -47,6 +46,8 @@ mappingDocTweets = {}
 mappingTweetUser = {}
 mappingTweetDate = {}
 userActivity = {}
+userTweets = {}
+
 
 for repEvent in os.listdir(path_events) :
 
@@ -72,7 +73,7 @@ for repEvent in os.listdir(path_events) :
 
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw), json_raw)
-				mappingTweetUser[tw] = data['user']['screen_name']
+				mappingTweetUser[tw] = data['user']['id']
 				d = datetime.strptime(data["created_at"], '%a %b %d %H:%M:%S %z %Y')
 				d2 = datetime(year=d.year, month=d.month, day=d.day, hour=d.hour, minute=d.minute)
 				mappingTweetDate[tw] = d2
@@ -80,20 +81,55 @@ for repEvent in os.listdir(path_events) :
 	# Pour chaque tweet concerné par l'évènement, on recherche l'activité de l'utilisateur (en évitant de réinterroger si
 	# on a déjà croisé cet utilisateur
 
+	maxNb = 0
+
 	for tw in mappingTweetUser :
 
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
+
+
+			print("On cherche pour ",mappingTweetUser[tw])
+
 			res = get_all_tweets(mappingTweetUser[tw],api)
+
+			# TODO il faudrait faire un export de res pour le stocker dans un json et avoir le texte des tweets pour le calcul de la feature sur la diversité
+
 			pprint.pprint(res)
 
-			nb = getNbInPeriod(res,mappingTweetDate[tw])
+			userTweets[mappingTweetUser[tw]] = res
 
-			print("nb tweets in period:",nb)
-			sys.exit(0)
+			if len(res) == 0 :
+				userActivity[mappingTweetUser[tw]] = 1
+			else :
+
+				nb = getNbInPeriod(res,mappingTweetDate[tw])
+
+				if nb > maxNb :
+					maxNb = nb
+
+				if nb == 0 :
+					userActivity[mappingTweetUser[tw]] = decideBetweenZeroAndMax(res[-1],mappingTweetDate[tw])
+				else :
+					userActivity[mappingTweetUser[tw]] = nb
+
+			print("nb tweets in period:",userActivity[mappingTweetUser[tw]])
+
+
+	# Maintenant on peut parcourir le mapping pour stocker dans features
+	for idDoc in mapping :
+		features.setdefault(idDoc,{})
+		t = []
+		for tw in mapping[idDoc]["tweets"] :
+			if userActivity[mappingTweetUser[tw]] != "max" :
+				t.append(userActivity[mappingTweetUser[tw]] / maxNb )
+			else :
+				t.append(1)
+		features[idDoc]["activity"] = sum(t)/len(t)
+
+	print(features)
 
 
 
-
-
-	with open(path_features+repEvent+"/social.json", "w") as fout :
+	with open(path_features+repEvent+"/socialActivity.json", "w") as fout :
 		json.dump(features,fout)
+
