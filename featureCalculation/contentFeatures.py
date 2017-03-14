@@ -1,7 +1,6 @@
 import os, sys
 import json
 
-
 def lookupTweet(id):
     for j in json_raw:
         if j["id"] == id:
@@ -37,21 +36,37 @@ for repEvent in os.listdir(path_events):
     for idDoc in mapping:
 
         urls = 0
+        max_urls = 0
         hashtags = 0
+        max_hashtags = 0
 
         features[idDoc] = {}
 
         for tw in mapping[idDoc]["tweets"]:
             data = lookupTweet(int(tw))
-            print(data)
+         #   print(data)
 
             urls += len(data["entities"]["urls"])
+
+            max_urls = max(urls,max_urls)
+
             hashtags += len(data["entities"]["hashtags"])
 
+            max_hashtags = max(hashtags,max_hashtags)
+
         features[idDoc]["url_count"] = urls
-        #		features[idDoc]["url_exist"] = urls
+
+        if urls > 0 :
+            features[idDoc]["url_exist"] = 1
+        else:
+            features[idDoc]["url_exist"] = 0
+
         features[idDoc]["hashtag_count"] = hashtags
-    #		features[idDoc]["hashtag_exist"] = hashtags
+
+        if hashtags > 0:
+    	    features[idDoc]["hashtag_exist"] = 1
+        else:
+            features[idDoc]["hashtag_exist"] = 0
 
     with open(path_features + repEvent + "/content.json", "w") as fout:
         json.dump(features, fout)
