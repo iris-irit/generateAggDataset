@@ -47,7 +47,7 @@ for repEvent in os.listdir(path_events):
         features[idDoc]["hashtag_exist"] = 0
         features[idDoc]["hashtag_count"] = 0
 
-        if mapping[idDoc]["type"] = "tweet":
+        if mapping[idDoc]["type"] == "tweet":
             for tw in mapping[idDoc]["tweets"]:
                 data = lookupTweet(int(tw))
              #   print(data)
