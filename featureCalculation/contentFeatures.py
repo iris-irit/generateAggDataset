@@ -69,7 +69,7 @@ for repEvent in os.listdir(path_events):
                 features[idDoc]["hashtag_exist"] = 1
                 features[idDoc]["hashtag_count"] = hashtags
 
-    print ("max_urls:",max_urls,", max_hashtags:",max_hashtags)
+    print ('max_urls:', max_urls, ', max_hashtags:', max_hashtags)
 
     for idDoc in mapping:
         if max_urls > 0:
