@@ -43,6 +43,7 @@ name_dir_inverse = "/mapping/inverse.json"
 features = {}
 mappingDocTweets = {}
 mappingTweetUser = {}
+userActivity = {}
 
 for repEvent in os.listdir(path_events) :
 
@@ -58,6 +59,8 @@ for repEvent in os.listdir(path_events) :
 	with open(path_events+repEvent+name_dir_inverse, "r") as fjson :
 		inverse = json.load(fjson)
 
+
+	# Pour chaque document dans la collection, on cherche les utilisateurs des tweets associés à ce document
 	for idDoc in mapping :
 
 		mappingDocTweets[idDoc] = mapping[idDoc]["tweets"]
@@ -66,9 +69,18 @@ for repEvent in os.listdir(path_events) :
 
 			if tw not in mappingTweetUser :
 				data = lookupTweet(int(tw), json_raw)
-				print(data)
-				print(tw)
-				sys.exit()
+				mappingTweetUser[tw] = data['user']['id']
+
+	# Pour chaque tweet concerné par l'évènement, on recherche l'activité de l'utilisateur (en évitant de réinterroger si
+	# on a déjà croisé cet utilisateur
+
+	for tw in mappingTweetUser :
+
+		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
+			user = api.get_user(user_id=mappingTweetUser[tw])
+			print(user)
+
+
 
 
 
