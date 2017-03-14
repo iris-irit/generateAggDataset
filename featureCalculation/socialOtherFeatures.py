@@ -47,6 +47,8 @@ mappingDocTweets = {}
 mappingTweetUser = {}
 mappingTweetDate = {}
 userActivity = {}
+userTweets = {}
+
 
 for repEvent in os.listdir(path_events) :
 
@@ -80,20 +82,37 @@ for repEvent in os.listdir(path_events) :
 	# Pour chaque tweet concerné par l'évènement, on recherche l'activité de l'utilisateur (en évitant de réinterroger si
 	# on a déjà croisé cet utilisateur
 
+	maxNb = 0
+
 	for tw in mappingTweetUser :
 
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
 			res = get_all_tweets(mappingTweetUser[tw],api)
 			pprint.pprint(res)
 
+			userTweets[mappingTweetUser[tw]] = res
+
 			nb = getNbInPeriod(res,mappingTweetDate[tw])
 
+			if nb > maxNb :
+				maxNb = nb
+
+			userActivity[mappingTweetUser[tw]] = nb
+
 			print("nb tweets in period:",nb)
-			sys.exit(0)
+
+
+	# Maintenant on peut parcourir le mapping pour stocker dans features
+	for idDoc in mapping :
+		features.setdefault(idDoc,{})
+		t = []
+		for tw in mapping[idDoc]["tweets"] :
+			t.append(userActivity[mappingTweetUser[tw]] / maxNb )
+		features[idDoc]["activity"] = sum(t)/len(t)
+
+	print(features)
 
 
 
-
-
-	with open(path_features+repEvent+"/social.json", "w") as fout :
+	with open(path_features+repEvent+"/socialOther.json", "w") as fout :
 		json.dump(features,fout)
