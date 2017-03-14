@@ -7,6 +7,7 @@
           <option value="featureCalculation.otherFeatures.otherFeatures_functions" />
           <option value="featureCalculation.otherFeatures.*" />
           <option value="featureCalculation.socialOtherFeatures.socialFunctions" />
+          <option value="featureCalculation.socialOtherFeatures.lookupTweet" />
         </list>
       </option>
     </inspection_tool>

@@ -45,3 +45,17 @@ def get_all_tweets(screen_name, api):
 
 
 	return outtweets
+
+
+def getNbInPeriod(tw,d) :
+
+	year = d.year
+	month = d.month
+
+	nb = 0
+
+	for el in tw :
+		if el[1].year == year and el[1].month == month :
+			nb += 1
+
+	return nb
