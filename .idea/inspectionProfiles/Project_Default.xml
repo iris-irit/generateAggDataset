@@ -6,6 +6,7 @@
         <list>
           <option value="featureCalculation.otherFeatures.otherFeatures_functions" />
           <option value="featureCalculation.otherFeatures.*" />
+          <option value="featureCalculation.socialOtherFeatures.socialFunctions" />
         </list>
       </option>
     </inspection_tool>
