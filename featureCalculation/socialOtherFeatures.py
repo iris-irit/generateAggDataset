@@ -102,7 +102,7 @@ for repEvent in os.listdir(path_events) :
 			else :
 				userActivity[mappingTweetUser[tw]] = nb
 
-			print("nb tweets in period:",nb)
+			print("nb tweets in period:",userActivity[mappingTweetUser[tw]])
 
 
 	# Maintenant on peut parcourir le mapping pour stocker dans features
