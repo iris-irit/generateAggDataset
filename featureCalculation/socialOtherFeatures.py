@@ -127,7 +127,6 @@ for repEvent in os.listdir(path_events) :
 
 
 
-	with open(path_features+repEvent+"/socialOther.json", "w") as fout :
+	with open(path_features+repEvent+"/socialActivity.json", "w") as fout :
 		json.dump(features,fout)
 
-	sys.exit(0)
