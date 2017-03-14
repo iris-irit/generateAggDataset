@@ -1,6 +1,7 @@
 import os, sys
 import json
 import tweepy
+import pprint
 
 from socialFunctions import *
 
@@ -78,8 +79,8 @@ for repEvent in os.listdir(path_events) :
 
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
 			user = api.get_user(user_id=mappingTweetUser[tw])
-			print(user["_json"]["status"])
-
+			json = user._json
+			pprint.pprint(json["status"])
 			sys.exit(0)
 
 
