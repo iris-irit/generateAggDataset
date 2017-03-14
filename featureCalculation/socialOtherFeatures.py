@@ -65,7 +65,7 @@ for repEvent in os.listdir(path_events) :
 		for tw in mapping[idDoc]["tweets"] :
 
 			if tw not in mappingTweetUser :
-				data = lookupTweet(int(tw))
+				data = lookupTweet(int(tw), json_raw)
 				print(data)
 				print(tw)
 				sys.exit()
