@@ -80,6 +80,8 @@ for repEvent in os.listdir(path_events) :
 			user = api.get_user(user_id=mappingTweetUser[tw])
 			print(user)
 
+			sys.exit(0)
+
 
 
 
