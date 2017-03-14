@@ -80,7 +80,8 @@ for repEvent in os.listdir(path_events) :
 		if mappingTweetUser[tw] not in userActivity :  # si on n'a pas croisé l'utlisateur
 			user = api.get_user(user_id=mappingTweetUser[tw])
 			json = user._json
-			pprint.pprint(json["status"])
+			pprint.pprint(json)
+
 			sys.exit(0)
 
 
