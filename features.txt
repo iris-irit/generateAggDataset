@@ -11,7 +11,8 @@ CONTENT FEATURES
 
 
 - Presence des termes de la requêtes
-- Presence d'urls (valable pour les tweets uniquements, sinon 0 => A reflechir)
+- Presence d'urls (valable pour les tweets uniquements, sinon 0)
+- Nombre d'urls
 - Présence de hashtags
 - Nb hashtags
 - TReDIX (tweet reading difficulty)
