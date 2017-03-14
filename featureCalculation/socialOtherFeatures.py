@@ -33,7 +33,6 @@ api = tweepy.API(auth, wait_on_rate_limit=True,retry_errors=131,retry_count=2)
 
 
 
-
 path_events = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/"
 path_json =  "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Preliminaries/"
 path_features = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Features/"
@@ -96,15 +95,19 @@ for repEvent in os.listdir(path_events) :
 
 			userTweets[mappingTweetUser[tw]] = res
 
-			nb = getNbInPeriod(res,mappingTweetDate[tw])
-
-			if nb > maxNb :
-				maxNb = nb
-
-			if nb == 0 :
-				userActivity[mappingTweetUser[tw]] = decideBetweenZeroAndMax(res[-1],mappingTweetDate[tw])
+			if len(res) == 0 :
+				userActivity[mappingTweetUser[tw]] = 1
 			else :
-				userActivity[mappingTweetUser[tw]] = nb
+
+				nb = getNbInPeriod(res,mappingTweetDate[tw])
+
+				if nb > maxNb :
+					maxNb = nb
+
+				if nb == 0 :
+					userActivity[mappingTweetUser[tw]] = decideBetweenZeroAndMax(res[-1],mappingTweetDate[tw])
+				else :
+					userActivity[mappingTweetUser[tw]] = nb
 
 			print("nb tweets in period:",userActivity[mappingTweetUser[tw]])
 
