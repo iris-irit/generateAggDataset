@@ -4,6 +4,8 @@ import sys
 import numpy as np
 import scipy.stats.mstats
 
+#test GH
+
 if len(sys.argv) <= 1:
 	print('Usage: python {0} <path-to-indri-index> [<index-name>]'.format(
 		sys.argv[0]))
