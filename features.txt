@@ -12,9 +12,9 @@ CONTENT FEATURES
 
 - Presence des termes de la requêtes
 - Presence d'urls (valable pour les tweets uniquements, sinon 0)
-- Nombre d'urls
-- Présence de hashtags
-- Nb hashtags
+- Nombre d'urls (valable pour les tweets uniquements, sinon 0)
+- Présence de hashtags (valable pour les tweets uniquements, sinon 0)
+- Nb hashtags (valable pour les tweets uniquements, sinon 0)
 - TReDIX (tweet reading difficulty)
 - Opinion (pour l'instant on dit que l'on ne veut que des trucs neutres)
 - Modèles évalués par rapport au label de l'évènement

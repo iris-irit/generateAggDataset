@@ -42,31 +42,37 @@ for repEvent in os.listdir(path_events):
 
         features[idDoc] = {}
 
-        for tw in mapping[idDoc]["tweets"]:
-            data = lookupTweet(int(tw))
-         #   print(data)
+        features[idDoc]["url_exist"] = 0
+        features[idDoc]["url_count"] = 0
+        features[idDoc]["hashtag_exist"] = 0
+        features[idDoc]["hashtag_count"] = 0
 
-            urls += len(data["entities"]["urls"])
+        if mapping[idDoc]["type"] = "tweet":
+            for tw in mapping[idDoc]["tweets"]:
+                data = lookupTweet(int(tw))
+             #   print(data)
 
-            max_urls = max(urls,max_urls)
+                urls += len(data["entities"]["urls"])
 
-            hashtags += len(data["entities"]["hashtags"])
+                max_urls = max(urls,max_urls)
 
-            max_hashtags = max(hashtags,max_hashtags)
+                hashtags += len(data["entities"]["hashtags"])
 
-        features[idDoc]["url_count"] = urls
+                max_hashtags = max(hashtags,max_hashtags)
 
-        if urls > 0 :
-            features[idDoc]["url_exist"] = 1
-        else:
-            features[idDoc]["url_exist"] = 0
+            features[idDoc]["url_count"] = urls/max_urls
 
-        features[idDoc]["hashtag_count"] = hashtags
+            if urls > 0 :
+                features[idDoc]["url_exist"] = 1
+            else:
+                features[idDoc]["url_exist"] = 0
 
-        if hashtags > 0:
-    	    features[idDoc]["hashtag_exist"] = 1
-        else:
-            features[idDoc]["hashtag_exist"] = 0
+            features[idDoc]["hashtag_count"] = hashtags/max_hashtags
+
+            if hashtags > 0:
+                features[idDoc]["hashtag_exist"] = 1
+            else:
+                features[idDoc]["hashtag_exist"] = 0
 
     with open(path_features + repEvent + "/content.json", "w") as fout:
         json.dump(features, fout)
