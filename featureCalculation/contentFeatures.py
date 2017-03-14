@@ -33,12 +33,13 @@ for repEvent in os.listdir(path_events):
     with open(path_events + repEvent + name_dir_inverse, "r") as fjson:
         inverse = json.load(fjson)
 
+    max_urls = 0
+    max_hashtags = 0
+
     for idDoc in mapping:
 
         urls = 0
-        max_urls = 0
         hashtags = 0
-        max_hashtags = 0
 
         features[idDoc] = {}
 
@@ -60,13 +61,20 @@ for repEvent in os.listdir(path_events):
 
                 max_hashtags = max(hashtags,max_hashtags)
 
-            if max_urls > 0 :
+            if urls > 0 :
                 features[idDoc]["url_exist"] = 1
-                features[idDoc]["url_count"] = urls / max_urls
+                features[idDoc]["url_count"] = urls
 
-            if max_hashtags > 0:
+            if hashtags > 0:
                 features[idDoc]["hashtag_exist"] = 1
-                features[idDoc]["hashtag_count"] = hashtags / max_hashtags
+                features[idDoc]["hashtag_count"] = hashtags
+
+    for idDoc in mapping:
+        if max_urls > 0:
+            features[idDoc]["url_count"] = features[idDoc]["url_count"] / max_urls
+
+        if max_hashtags > 0:
+            features[idDoc]["hashtag_count"] = features[idDoc]["hashtag_count"] / max_hashtags
 
     with open(path_features + repEvent + "/content.json", "w") as fout:
         json.dump(features, fout)
