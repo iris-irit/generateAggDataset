@@ -51,6 +51,8 @@ userTweets = {}
 
 for repEvent in os.listdir(path_events) :
 
+	features = {}
+
 	if not os.path.exists(path_features+repEvent) :
 		os.mkdir(path_features+repEvent)
 
