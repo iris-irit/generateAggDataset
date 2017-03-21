@@ -46,7 +46,7 @@ with open(path_event_description, "r") as f:
 			fin.write("<query>\n<number>" + id_event + "</number>\n"
 			                                         "<text>" + ' '.join(res) + "</text>\n</query>\n")
 
-		with open(path_queries_terrier+id_event+".xml") as fTerrier :
+		with open(path_queries_terrier+id_event+".xml", "w") as fTerrier :
 			fTerrier.write("<top>"
 			               ""
 			               "<num>Number: "+id_event+
