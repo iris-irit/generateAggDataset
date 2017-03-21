@@ -92,7 +92,8 @@ for repEvent in os.listdir(path_events) :
 	for model in models :
 		file = findAppropriateFile(model,fileModels)
 		res,boundMin, boundMax, positive = parseResultFile(path_index+repEvent+"/results/"+file)
-		print(res,boundMin, boundMax, positive)
+		if not positive :
+			print(res,boundMin, boundMax, positive)
 
 		for idDoc in res :
 
