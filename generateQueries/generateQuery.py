@@ -47,12 +47,12 @@ with open(path_event_description, "r") as f:
 			                                         "<text>" + ' '.join(res) + "</text>\n</query>\n")
 
 		with open(path_queries_terrier+id_event+".xml", "w") as fTerrier :
-			fTerrier.write("<top>"
-			               ""
-			               "<num>Number: "+id_event+
-			               "<title> "+' '.join(res)+
-			               ""
-			               "</top>"
+			fTerrier.write("<top>\n"
+			               "\n"
+			               "<num>Number: "+id_event+"\n"
+			               "<title> "+' '.join(res)+"\n"
+			               "\n"
+			               "</top>\n"
 			)
 
 with open(path_queries, "a") as f:
