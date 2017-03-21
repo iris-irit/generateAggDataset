@@ -80,7 +80,7 @@ for repEvent in os.listdir(path_events) :
 	# On cherche si les modèles ont été calculés (présence du répertoire results dans le répertoire d'index de l'évènement
 	path_result_models = path_index+repEvent+"/results"
 	if not os.path.exists(path_result_models) :
-		pass
+		continue
 
 
 	fileModels = os.listdir(path_index+repEvent+"/results")
