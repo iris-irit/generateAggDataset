@@ -96,7 +96,7 @@ for repEvent in os.listdir(path_events) :
 
 		for idDoc in res :
 
-			if positive :
+			if positive and boundMax > 0.0:
 				features[idDoc][model] = res[idDoc] / boundMax
 			else :
 				features[idDoc][model] = 1 - (res[idDoc] / boundMin) + (boundMax/boundMin)
