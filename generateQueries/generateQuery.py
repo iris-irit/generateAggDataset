@@ -22,7 +22,7 @@ queries = {}
 
 
 models = ["BB2","BM25","DFR_BM25","DLH", "DLH13", "DPH", "DFRee", "Hiemstra_LM", "IFB2","In_expB2", "In_expC2", "InL2", "LemurTF_IDF",
-          "LGD", "PL2", "TF_IDF", "DFRWeightingModel"]
+          "LGD", "PL2", "TF_IDF"]
 
 
 def word_feats(words):
