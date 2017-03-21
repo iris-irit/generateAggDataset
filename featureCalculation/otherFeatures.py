@@ -9,7 +9,7 @@ from otherFunctions import *
 # #############################################
 
 
-path_events = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/" # Pas utile pour l'instant
+path_events = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Raw/"
 path_json =  "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Preliminaries/"
 path_features = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Features/" # Pas utile pour l'instant
 
