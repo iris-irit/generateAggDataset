@@ -4,7 +4,7 @@ import numpy as np
 
 
 def findAppropriateFile(m,l):
-	print(m,l)
+	#print(m,l)
 	for e in l :
 		if e.startswith(m) and e.endswith(".res") :
 			return e
