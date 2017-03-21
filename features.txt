@@ -17,7 +17,7 @@ CONTENT FEATURES
 - Nb hashtags (valable pour les tweets uniquements, sinon 0) => ok
 - TReDIX (tweet reading difficulty)
 - Opinion (pour l'instant on dit que l'on ne veut que des trucs neutres)
-- Modèles évalués par rapport au label de l'évènement => ok (problème avec BM25)
+- Modèles évalués par rapport au label de l'évènement => en cours
 
 OTHER FEATURES
 

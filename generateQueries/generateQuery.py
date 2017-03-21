@@ -5,9 +5,16 @@ import os
 # Récuperer le fichier contenant les sujets
 path_event_description = "/projets/iris/CORPUS/DOCS/TWITTER_EVENTS_2012/Events2012/event_descriptions.tsv"
 path_queries = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/queries_all_events.xml"
+path_queries_terrier = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/"
 
 if os.path.isfile(path_queries):
 	os.remove(path_queries)
+
+
+if os.path.isfile(path_queries_terrier):
+	os.remove(path_queries)
+
+os.system("mkdir "+path_queries_terrier)
 
 queries = {}
 
@@ -35,9 +42,18 @@ with open(path_event_description, "r") as f:
 		res = word_feats(raw_text)
 		print(res)
 
-		with open(path_queries, "a") as f:
-			f.write("<query>\n<number>" + id_event + "</number>\n"
+		with open(path_queries, "a") as fin:
+			fin.write("<query>\n<number>" + id_event + "</number>\n"
 			                                         "<text>" + ' '.join(res) + "</text>\n</query>\n")
+
+		with open(path_queries_terrier+id_event+".xml") as fTerrier :
+			fTerrier.write("<top>"
+			               ""
+			               "<num>Number: "+id_event+
+			               "<title> "+' '.join(res)+
+			               ""
+			               "</top>"
+			)
 
 with open(path_queries, "a") as f:
 	f.write("</parameters>\n")
