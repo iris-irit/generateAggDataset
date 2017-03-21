@@ -6,6 +6,8 @@ import os
 path_event_description = "/projets/iris/CORPUS/DOCS/TWITTER_EVENTS_2012/Events2012/event_descriptions.tsv"
 path_queries = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/queries_all_events.xml"
 path_queries_terrier = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/"
+cmd_terrier = "/projets/iris/PROJETS/PRINCESS/Code/Soft/terrier-4.2/bin/trec_terrier.sh -r -Dterrier.var=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Index/indexTerrier/2 -Dtrec.model=DFR_BM25 -Dtrec.topics=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/2.xml"
+
 
 if os.path.isfile(path_queries):
 	os.remove(path_queries)
@@ -17,6 +19,10 @@ if os.path.isfile(path_queries_terrier):
 os.system("mkdir "+path_queries_terrier)
 
 queries = {}
+
+
+models = ["BB2","BM25","DFR_BM25","DLH", "DLH13", "DPH", "DFRee", "Hiemstra_LM", "IFB2","In_expB2", "In_expC2", "InL2", "LemurTF_IDF",
+          "LGD", "PL2", "TF_IDF", "DFRWeightingModel"]
 
 
 def word_feats(words):
@@ -54,6 +60,11 @@ with open(path_event_description, "r") as f:
 			               "\n"
 			               "</top>\n"
 			)
+
+		for model in models :
+			cmd = cmd_terrier+" -Dterrier.var=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Index/indexTerrier/"+id_event+" -Dtrec.model="+model+" -Dtrec.topics=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/"+id_event+".xml"
+			os.system(cmd)
+
 
 with open(path_queries, "a") as f:
 	f.write("</parameters>\n")
