@@ -21,6 +21,7 @@ def parseResultFile(fn):
 	with open(fn,"r") as f :
 		first_line = f.readline()
 		t = first_line.split(" ")
+		print(t)
 		if float(t[4]) < 0 :
 			positive = False
 			boundMin = 0.0
