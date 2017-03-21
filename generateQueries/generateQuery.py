@@ -6,7 +6,7 @@ import os
 path_event_description = "/projets/iris/CORPUS/DOCS/TWITTER_EVENTS_2012/Events2012/event_descriptions.tsv"
 path_queries = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/queries_all_events.xml"
 path_queries_terrier = "/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/"
-cmd_terrier = "/projets/iris/PROJETS/PRINCESS/Code/Soft/terrier-4.2/bin/trec_terrier.sh -r -Dterrier.var=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Index/indexTerrier/2 -Dtrec.model=DFR_BM25 -Dtrec.topics=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/2.xml"
+cmd_terrier = "/projets/iris/PROJETS/PRINCESS/TournAgg/Code/Soft/terrier-4.2/bin/trec_terrier.sh -r -Dterrier.var=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Index/indexTerrier/2 -Dtrec.model=DFR_BM25 -Dtrec.topics=/projets/iris/PROJETS/PRINCESS/TournAgg/Datasets/Queries/Terrier/2.xml"
 
 
 if os.path.isfile(path_queries):
