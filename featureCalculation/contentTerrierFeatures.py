@@ -22,24 +22,26 @@ def parseResultFile(fn):
 		first_line = f.readline()
 		t = first_line.split(" ")
 		print(t)
-		if float(t[4]) < 0 :
-			positive = False
-			boundMin = 0.0
-			boundMax = -100000.0 # très sale
+		if len(t) > 1 :
+			if float(t[4]) < 0 :
+				positive = False
+				boundMin = 0.0
+				boundMax = -100000.0 # très sale
 
 	with open(fn,"r") as f :
 		for line in f :
 			t = line.split(" ")
-			idDoc = t[2]
-			val = t[4]
+			if len(t) > 1 :
+				idDoc = t[2]
+				val = t[4]
 
-			res[idDoc] = float(val)
+				res[idDoc] = float(val)
 
-			if float(val) > boundMax :
-				boundMax = float(val)
+				if float(val) > boundMax :
+					boundMax = float(val)
 
-			if not positive and float(val) < boundMin :
-				boundMin = float(val)
+				if not positive and float(val) < boundMin :
+					boundMin = float(val)
 
 		return (res,boundMin,boundMax,positive)
 
