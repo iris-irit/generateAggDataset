@@ -65,6 +65,9 @@ models = ["BB2","BM25","DFR_BM25","DLH", "DLH13", "DPH", "DFRee", "Hiemstra_LM",
 
 events = os.listdir(path_events)
 
+with open("pb.txt", 'w') as fpb:
+	fpb.write("")
+
 
 for repEvent in os.listdir(path_events) :
 
@@ -90,18 +93,29 @@ for repEvent in os.listdir(path_events) :
 	fileModels = os.listdir(path_index+repEvent+"/results")
 
 	for model in models :
+
+		pb = False
+
 		file = findAppropriateFile(model,fileModels)
 		res,boundMin, boundMax, positive = parseResultFile(path_index+repEvent+"/results/"+file)
 		if not positive :
 			print(res,boundMin, boundMax, positive)
 
 		for idDoc in res :
-
+			val = 0.0
 			if positive and boundMax > 0.0:
-				features[idDoc][model] = res[idDoc] / boundMax
+				val = res[idDoc] / boundMax
 			elif not positive :
-				features[idDoc][model] = 1 - (res[idDoc] / boundMin) + (boundMax/boundMin)
+				 val = 1 - (res[idDoc] / boundMin) + (boundMax/boundMin)
 
+			features[idDoc][model] = val
+
+			if val < 0.0 :
+				pb = True
+
+		if pb :
+			with open("pb.txt", 'a') as fpb :
+				fpb.write(model+" in event "+repEvent)
 
 
 
