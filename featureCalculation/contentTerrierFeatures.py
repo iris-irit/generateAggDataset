@@ -69,6 +69,8 @@ with open("pb.txt", 'w') as fpb:
 	fpb.write("")
 
 
+featPb = set()
+
 for repEvent in os.listdir(path_events) :
 
 	features = {}
@@ -114,6 +116,7 @@ for repEvent in os.listdir(path_events) :
 				pb = True
 
 		if pb :
+			featPb.add(model)
 			with open("pb.txt", 'a') as fpb :
 				fpb.write(model+" in event "+repEvent+"\n")
 
@@ -122,8 +125,7 @@ for repEvent in os.listdir(path_events) :
 	with open(path_features+repEvent+"/terrier.json", "w") as fout :
 		json.dump(features,fout)
 
-
-
+print(featPb)
 
 
 
