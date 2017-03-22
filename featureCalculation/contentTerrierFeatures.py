@@ -115,7 +115,7 @@ for repEvent in os.listdir(path_events) :
 
 		if pb :
 			with open("pb.txt", 'a') as fpb :
-				fpb.write(model+" in event "+repEvent)
+				fpb.write(model+" in event "+repEvent+"\n")
 
 
 
